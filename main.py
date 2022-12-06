@@ -24,7 +24,7 @@ def get_result() -> str:
         if sys.argv[1][1] == 's':
             stat = db.get_values_by_time(start_date)
         elif sys.argv[1][1] == 'u':
-            stat = db.get_values_count_visits_by_time()
+            stat = db.get_values_count_visits_by_time(start_date)
         
         data = ''
         for value in stat:
