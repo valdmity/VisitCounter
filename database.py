@@ -18,7 +18,8 @@ def get_values_by_time(start_date: datetime) -> list[tuple[str, str]]:
     values = get_all_values()
     if start_date + timedelta(days=0.5) > datetime.utcnow():
         return list(values)
-    return [value for value in values if datetime.utcfromtimestamp(value[1]) > start_date]
+    return [value for value in values \
+        if datetime.strptime(value[1], '%Y-%m-%d %H:%M:%S') > start_date]
 
 
 def get_values_by_time_and_id(start_date: datetime, id: str) -> list[tuple[str, str]]:
