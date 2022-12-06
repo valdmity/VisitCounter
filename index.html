@@ -12,7 +12,7 @@ function getCookie(name) {
 if (getCookie('id') === '-1'){
     document.cookie = "id=0";
 }
-let url = 'http://192.168.3.5:8000/' + getCookie('id');
+let url = 'http://192.168.3.5:8080/' + getCookie('id');
 
 fetch(url)
     .then(response => response.text()

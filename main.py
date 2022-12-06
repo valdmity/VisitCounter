@@ -28,7 +28,7 @@ def get_result() -> str:
         
         data = ''
         for value in stat:
-            data += value[0] + '-' + value[1] + '\n'
+            data += value[0] + ' - ' + value[1] + '\n'
         return data
     
     return '400 BR'
