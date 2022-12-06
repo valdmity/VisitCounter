@@ -14,7 +14,7 @@ def get(id):
 
 def get_user_id(id: str):
     if id != '0': return id
-    return len(db.get_values_frob_db().keys())
+    return len(db.get_all_values().keys())
 
 
 def get_response(user_id: str):

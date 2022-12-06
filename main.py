@@ -1,22 +1,15 @@
 import database as db
 from typing import Iterator
+from datetime import datetime, timedelta
 import sys
 
 
-def get_simple_visits_statistics() -> Iterator[tuple[str, str]]:
-    '''
-    return: pairs user_id and datetime 
-    '''
-    # TODO
-    pass
-
-
-def get_unique_visits_statistics() -> Iterator[tuple[str, str]]:
-    '''
-    return: pairs user_id and visits_count
-    '''
-    # TODO
-    pass
+d = {
+"y": timedelta(days=365),
+"m": timedelta(days=30),
+"d": timedelta(days=1),
+"a": timedelta(days=0)
+}
 
 
 def get_result() -> str:
@@ -24,13 +17,20 @@ def get_result() -> str:
         with open('commands.txt', 'r', encoding='utf-8') as f:
             help_text = f.read()
             return help_text
+
     if len(sys.argv) == 3:
+        start_date = datetime.utcnow() - d[sys.argv[2][1]]
+        stat = []
         if sys.argv[1][1] == 's':
-            stat = get_simple_visits_statistics()
-            # TODO
+            stat = db.get_values_by_time(start_date)
         elif sys.argv[1][1] == 'u':
-            stat = get_unique_visits_statistics()
-            # TODO
+            stat = db.get_values_count_visits_by_time()
+        
+        data = ''
+        for value in stat:
+            data += value[0] + '-' + value[1] + '\n'
+        return data
+    
     return '400 BR'
 
 
