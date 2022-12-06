@@ -14,8 +14,8 @@ def get(id):
 
 
 def get_user_id(id: str):
-    if id != '0': return id
-    return len(db.get_all_values().keys())
+    if id != '-1': return id
+    return str(len(db.get_all_ids()) + 1)
 
 
 def get_response(user_id: str):

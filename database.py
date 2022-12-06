@@ -27,7 +27,7 @@ def get_values_by_time_and_id(start_date: datetime, id: str) -> list[tuple[str, 
 
 
 def get_all_ids() -> list[str]:
-    values = get_all_values
+    values = get_all_values()
     return list(set([value[0] for value in values]))
 
 
