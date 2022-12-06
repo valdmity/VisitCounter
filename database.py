@@ -1,16 +1,23 @@
-def get_values_frob_db() -> dict[str, list[str]]:
+def get_values_frob_db() -> list[tuple[str, str]]:
     with open('db.txt', 'r') as f:
-        data = f.readline()[1:-1].split(', ')
+        lines = f.readlines()
         
-        if len(data) == 0: return dict()
+        if len(lines) == 0: return []
 
-        return dict([(line.split(': ')[0][1:-1], line.split(': ')[1][1:-1]) for line in data])
+        items = []
+        for line in lines:
+            a, b = line.split(': ')[0], line.split(': ')[1][:-1]
+            items.append((a, b))
+        return items
+
 
 
 def add_to_db(user_id: str, time: str):
-    items = get_values_frob_db()
+    items = list(get_values_frob_db())
     with open('db.txt', 'w+') as f:
-        if user_id not in items:
-            items[user_id] = []
-        items[user_id].append(time)
-        f.write(str(items))
+        items.append((user_id, time))
+        data = ''
+        for item in items:
+            print(item)
+            data += item[0] + ': ' + item[1] + '\n'
+        f.write(data)
