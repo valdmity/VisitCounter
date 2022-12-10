@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 
 
-def get_all_values() -> list[tuple[str, str]]:
+def get_all_values() -> list[tuple[str, str, str]]:
     with open('db.txt', 'r') as f:
         lines = f.readlines()
         
@@ -9,12 +9,13 @@ def get_all_values() -> list[tuple[str, str]]:
 
         items = []
         for line in lines:
-            a, b = line.split(': ')[0], line.split(': ')[1][:-1]
-            items.append((a, b))
+            t = line.split(': ')
+            a, b, c = t[0], t[1], t[2][:-1]
+            items.append((a, b, c))
         return items
 
 
-def get_values_by_time(start_date: datetime) -> list[tuple[str, str]]:
+def get_values_by_time(start_date: datetime) -> list[tuple[str, str, str]]:
     values = get_all_values()
     if start_date + timedelta(days=0.5) > datetime.utcnow():
         return list(values)
@@ -22,7 +23,7 @@ def get_values_by_time(start_date: datetime) -> list[tuple[str, str]]:
         if datetime.strptime(value[1], '%Y-%m-%d %H:%M:%S') > start_date]
 
 
-def get_values_by_time_and_id(start_date: datetime, id: str) -> list[tuple[str, str]]:
+def get_values_by_time_and_id(start_date: datetime, id: str) -> list[tuple[str, str, str]]:
     values = get_values_by_time(start_date)
     return [value for value in values if value[0] == id]
 
@@ -41,12 +42,12 @@ def get_values_count_visits_by_time(start_date: datetime) -> list[tuple[str, str
     return values
 
 
-def add_to_db(user_id: str, time: str):
+def add_to_db(user_id: str, time: str, browser: str):
     items = list(get_all_values())
     with open('db.txt', 'w+') as f:
-        items.append((user_id, time))
+        items.append((user_id, time, browser))
         data = ''
         for item in items:
             print(item)
-            data += item[0] + ': ' + item[1] + '\n'
+            data += item[0] + ': ' + item[1] + ': ' + item[2] + '\n'
         f.write(data)
