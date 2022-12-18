@@ -48,6 +48,10 @@ def add_to_db(user_id: str, time: str, browser: str):
         items.append((user_id, time, browser))
         data = ''
         for item in items:
-            print(item)
             data += item[0] + ': ' + item[1] + ': ' + item[2] + '\n'
         f.write(data)
+
+
+def clean_db():
+    with open('db.txt', 'w+') as f:
+        f.write('')

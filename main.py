@@ -1,5 +1,4 @@
 import database as db
-from typing import Iterator
 from datetime import datetime, timedelta
 import sys
 
