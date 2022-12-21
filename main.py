@@ -11,18 +11,18 @@ d = {
 }
 
 
-def get_result() -> str:
-    if len(sys.argv) == 2 and sys.argv[1][1] == 'h':
+def get_result(argv) -> str:
+    if len(argv) == 2 and argv[1][1] == 'h':
         with open('commands.txt', 'r', encoding='utf-8') as f:
             help_text = f.read()
             return help_text
 
-    if len(sys.argv) == 3:
-        start_date = datetime.utcnow() - d[sys.argv[2][1]]
+    if len(argv) == 3:
+        start_date = datetime.utcnow() - d[argv[2][1]]
         stat = []
-        if sys.argv[1][1] == 's':
+        if argv[1][1] == 's':
             stat = db.get_values_by_time(start_date)
-        elif sys.argv[1][1] == 'u':
+        elif argv[1][1] == 'u':
             stat = db.get_values_count_visits_by_time(start_date)
         
         data = ''
@@ -35,4 +35,4 @@ def get_result() -> str:
 
 
 if __name__ == '__main__':
-    print(get_result())
+    print(get_result(sys.argv))
