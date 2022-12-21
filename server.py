@@ -8,17 +8,13 @@ app = Flask(__name__)
 
 @app.route('/<id>')
 def get(id):
-    print(id)
     user_id = get_user_id(id)
-    print(user_id)
     db.add_to_db(user_id, str(datetime.utcnow())[:19], parse_browser(request.user_agent.string))
     return get_response(user_id)
 
 
 def get_user_id(id: str):
-    print(id)
     if id != '0': return id
-    print(id)
     return str(len(db.get_all_ids()) + 1)
 
 
