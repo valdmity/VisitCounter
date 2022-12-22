@@ -1,11 +1,14 @@
 from datetime import datetime, timedelta
 
+DATABASE_FILE_PATH = "db.txt"
+
 
 def get_all_values() -> list[tuple[str, str, str]]:
-    with open('db.txt', 'r') as f:
+    with open(DATABASE_FILE_PATH, 'r') as f:
         lines = f.readlines()
         
-        if len(lines) == 0: return []
+        if len(lines) == 0:
+            return []
 
         items = []
         for line in lines:
@@ -19,8 +22,8 @@ def get_values_by_time(start_date: datetime) -> list[tuple[str, str, str]]:
     values = get_all_values()
     if start_date + timedelta(days=0.5) > datetime.utcnow():
         return list(values)
-    return [value for value in values \
-        if datetime.strptime(value[1], '%Y-%m-%d %H:%M:%S') > start_date]
+    return [value for value in values
+            if datetime.strptime(value[1], '%Y-%m-%d %H:%M:%S') > start_date]
 
 
 def get_values_by_time_and_id(start_date: datetime, id: str) -> list[tuple[str, str, str]]:
@@ -44,7 +47,7 @@ def get_values_count_visits_by_time(start_date: datetime) -> list[tuple[str, str
 
 def add_to_db(user_id: str, time: str, browser: str):
     items = list(get_all_values())
-    with open('db.txt', 'w+') as f:
+    with open(DATABASE_FILE_PATH, 'w+') as f:
         items.append((user_id, time, browser))
         data = ''
         for item in items:
@@ -53,5 +56,5 @@ def add_to_db(user_id: str, time: str, browser: str):
 
 
 def clean_db():
-    with open('db.txt', 'w+') as f:
+    with open(DATABASE_FILE_PATH, 'w+') as f:
         f.write('')
