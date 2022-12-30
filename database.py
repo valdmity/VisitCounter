@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta
 
 DATABASE_FILE_PATH = "db.txt"
+BROWSERS = ['Chrome', 'Firefox', 'Edge', 'Safari', 'Opera']
 
 
 def get_all_values() -> list[tuple[str, str, str]]:
@@ -29,6 +30,14 @@ def get_values_by_time(start_date: datetime) -> list[tuple[str, str, str]]:
 def get_values_by_time_and_id(start_date: datetime, id: str) -> list[tuple[str, str, str]]:
     values = get_values_by_time(start_date)
     return [value for value in values if value[0] == id]
+
+
+def get_statistic_by_browsers(time: datetime) -> list[tuple[str, str]]:
+    stat = []
+    all_stat = get_values_by_time(time)
+    for browser in BROWSERS:
+        stat.append((browser, str(len([s for s in all_stat if s[2] == browser]))))
+    return stat
 
 
 def get_all_ids() -> list[str]:
